@@ -9,6 +9,14 @@ RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 # Creating a non root user
 RUN useradd -ms /bin/bash ubuntu
 
+#  Add new user docker to sudo group
+RUN adduser ubuntu sudo
+
+# Ensure sudo group users are not 
+# asked for a password when using 
+# sudo command by ammending sudoers file
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
 # switch into the jax user
 USER ubuntu
 # add the user's .local/bin to path so that our --user pip installed packages will appear
